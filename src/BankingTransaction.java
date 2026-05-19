@@ -97,40 +97,8 @@ public class BankingTransaction {
     }
     
 
-    public void accountTransfer(int fromId, int toId, int amount) {
-        if (amount <= 0) {
-            System.out.println("Transfer failed: Amount must be greater than zero.");
-            return;
-        }
-        if (fromId == toId) {
-            System.out.println("Transfer failed: Cannot transfer to the same account.");
-            return;
-        }
-
-        Account fromAccount = accounts.get(fromId);
-        Account toAccount = accounts.get(toId);
-
-        if (fromAccount == null || toAccount == null) {
-            System.out.println("Transfer failed: One or both accounts does not exist.");
-            return;
-        }
-
-
-        Account firstLock;
-        Account secondLock;
-
-        if (fromId < toId) {
-            firstLock = fromAccount;
-            secondLock = toAccount;
-        } else {
-            firstLock = toAccount;
-            secondLock = fromAccount;
-        }
-
-        synchronized (firstLock) {
-            synchronized (secondLock) {
-                // Perform the atomic transaction under both locks
-                if (fromAccount.getBalance() >= amount) {
+    public synchronised void accountTransfer(int fromId, int toId, int amount) {
+          if (fromAccount.getBalance() >= amount) {
                     fromAccount.withdraw(amount);
                     toAccount.deposit(amount);
                     System.out.println("Successfully transferred " + amount + " from Account " + fromId + " to Account " + toId);
@@ -138,8 +106,6 @@ public class BankingTransaction {
                     System.out.println("Transfer failed: Account " + fromId + " has insufficient funds.");
                 }
             }
-        }
-    }
 
     public Integer getAccountBalance(int id) {
         Account account = accounts.get(id);
