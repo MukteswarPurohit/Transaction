@@ -55,7 +55,7 @@ public class BankingTransaction {
 
         public List<Transaction> getLedger() {
             
-            return new ArrayList<>(ledger);
+            return List.copyOf(ledger);
         }
     }
 
