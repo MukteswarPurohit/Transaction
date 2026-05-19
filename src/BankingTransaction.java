@@ -125,12 +125,13 @@ public class BankingTransaction {
 
     public static void main(String[] args) throws InterruptedException {
         BankingTransaction banktTransaction = new BankingTransaction();
-        banktTransaction.createAccount(1, 10000);
-        banktTransaction.createAccount(2, 15000);
+        banktTransaction.createAccount(1,10000);
+        banktTransaction.createAccount(2,15000);
+        banktTransaction.createAccount(3,5000);
 
 
-        Thread t1 = new Thread(() -> banktTransaction.accountTransfer(1, 2, 1000));
-        Thread t2 = new Thread(() -> banktTransaction.accountTransfer(2, 1, 500));
+        Thread t1 = new Thread(() -> banktTransaction.accountTransfer(1,2,1000));
+        Thread t2 = new Thread(() -> banktTransaction.accountTransfer(2,3,5000));
         Thread t3 = new Thread(() -> banktTransaction.withdraw(1, 12000));
 
         t1.start();
@@ -143,5 +144,6 @@ public class BankingTransaction {
 
         banktTransaction.getAccountHistory(1).forEach(System.out::println);
         banktTransaction.getAccountHistory(2).forEach(System.out::println);
+        banktTransaction.getAccountHistory(3).forEach(System.out::println);
     }
 }
